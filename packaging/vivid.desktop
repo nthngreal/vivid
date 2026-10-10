@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Vivid
+Comment=Color saturation per monitor
+Comment[uk]=Насиченість кольору для кожного монітора
+Exec=vivid
+Icon=vivid
+Categories=Settings;HardwareSettings;
+Terminal=false
