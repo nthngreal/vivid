@@ -69,7 +69,7 @@ python3 vivid.py                     # run
 bash packaging/build-appimage.sh     # build dist/Vivid-x86_64.AppImage (needs appimagetool)
 ```
 
-Pushing a `v*` tag builds the AppImage with GitHub Actions and attaches it to the release.
+Pushing a `v*` tag (or running the "Build AppImage" workflow with a version) builds the AppImage with GitHub Actions and attaches it to the release.
 
 ---
 
