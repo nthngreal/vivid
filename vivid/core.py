@@ -16,6 +16,7 @@ import os
 import re
 import shutil
 import subprocess
+import sys
 from dataclasses import dataclass
 
 from . import edid
@@ -165,6 +166,22 @@ class Output:
     pct: int        # saved saturation, read back from KWin's profile path
 
 
+def _system_env():
+    """Environment for system tools. A frozen build (AppImage) points LD_LIBRARY_PATH and
+    QT_PLUGIN_PATH at its bundled Qt; kscreen-doctor must not load those."""
+    env = dict(os.environ)
+    if getattr(sys, "frozen", False):
+        for k in ("LD_LIBRARY_PATH",):
+            orig = env.pop(k + "_ORIG", None)
+            if orig is not None:
+                env[k] = orig
+            else:
+                env.pop(k, None)
+        for k in ("QT_PLUGIN_PATH", "QML2_IMPORT_PATH", "QT_QPA_PLATFORM_PLUGIN_PATH"):
+            env.pop(k, None)
+    return env
+
+
 def _kscreen_doctor():
     exe = shutil.which("kscreen-doctor")
     if not exe:
@@ -180,7 +197,8 @@ def check_session():
 
 def list_outputs():
     try:
-        raw = subprocess.check_output([_kscreen_doctor(), "-j"], stderr=subprocess.DEVNULL, timeout=10)
+        raw = subprocess.check_output([_kscreen_doctor(), "-j"], stderr=subprocess.DEVNULL,
+                                      timeout=10, env=_system_env())
         data = json.loads(raw)
     except (subprocess.SubprocessError, ValueError) as e:
         raise VibranceError("err_list", str(e))
@@ -220,7 +238,8 @@ def apply(output, pct):
         path = make_icc(output, pct)
         args = [f"output.{output}.iccprofile.{path}", f"output.{output}.colorProfileSource.ICC",
                 f"output.{output}.colorPowerTradeoff.preferAccuracy"]
-    r = subprocess.run([_kscreen_doctor(), *args], capture_output=True, text=True, timeout=15)
+    r = subprocess.run([_kscreen_doctor(), *args], capture_output=True, text=True, timeout=15,
+                       env=_system_env())
     if r.returncode != 0:
         raise VibranceError("err_apply", (r.stderr or r.stdout).strip()[-300:])
     _cleanup(output, os.path.basename(path) if path else None)
