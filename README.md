@@ -28,7 +28,7 @@ it, just start it once from the new place and the menu entry follows.
 
 - finds all your monitors and shows their real model names;
 - one slider, **Save** and **Reset** per monitor;
-- English and Ukrainian interface;
+- English, Ukrainian and Russian interface;
 - picks up values set earlier with plasma-vibrance.
 
 ## Requirements

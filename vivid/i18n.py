@@ -1,6 +1,6 @@
-"""UI strings. Ukrainian and English."""
+"""UI strings. English (default), Ukrainian and Russian."""
 
-LANGS = {"en": "English", "uk": "Українська"}
+LANGS = {"en": "English", "uk": "Українська", "ru": "Русский"}
 
 STRINGS = {
     "uk": {
@@ -43,5 +43,24 @@ STRINGS = {
         "err_apply": "Could not apply the profile.",
         "error": "Error",
     },
+    "ru": {
+        "title": "Насыщенность цвета",
+        "hint": "Передвиньте ползунок и нажмите «Сохранить». Значение сохранится после перезагрузки.",
+        "save": "Сохранить",
+        "reset": "Сбросить",
+        "refresh": "Обновить список",
+        "saved": "Сохранено: {pct}%",
+        "unsaved": "Не сохранено",
+        "applied": "{label}: сохранено {pct}%",
+        "reset_done": "{label}: сброшено до 0%",
+        "no_outputs": "Мониторы не найдены.",
+        "language": "Язык:",
+        "about": "На основе plasma-vibrance (Matias Celiz, MIT).",
+        "err_no_kscreen": "Не найден kscreen-doctor. Нужен KDE Plasma 6 (пакет kscreen).",
+        "err_not_wayland": "Программа работает только в сеансе KDE Plasma на Wayland.",
+        "err_lcms": "Не найдена библиотека liblcms2.",
+        "err_list": "Не удалось получить список мониторов.",
+        "err_apply": "Не удалось применить профиль.",
+        "error": "Ошибка",
+    },
 }
-
